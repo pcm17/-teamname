@@ -137,7 +137,7 @@ public class Hnefatafl {
 		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
-			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
+			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r, pieceLayout);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
 					if(highlight[i][j] == true){
@@ -159,7 +159,7 @@ public class Hnefatafl {
      */
 	public static void movePiece(int c, int r){
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
+        boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
@@ -435,46 +435,6 @@ public class Hnefatafl {
 		setButtonImage(pieceType,dButton);
 	}
 
-    /**
-     * This function finds where a piece is allowed to move based on the rules of the game.
-     * @param piece This parameter is the current game piece that is being looked at.
-     * @param col This parameter is the current column that the game piece is located at.
-     * @param row This parameter is the current row that the game piece is located at.
-     * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
-     * piece can move to.
-     */
-	public static boolean[][] getValidMoves(char piece, int col, int row){
-		boolean[][] validSpaces = new boolean[boardSize][boardSize];
-		for(int i=col+1; i<boardSize; i++){//check move right
-            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
-				validSpaces[i][row] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=col-1; i>=0; i--){//check move left
-            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
-				validSpaces[i][row] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=row+1; i<boardSize; i++){//check move down
-            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
-				validSpaces[col][i] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=row-1; i>=0; i--){//check move up
-            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
-				validSpaces[col][i] = true;
-			}else{
-				break;
-			}
-		}
-		return validSpaces;
-	}
 
 	/**
      * This function sets the icon of a particular button.

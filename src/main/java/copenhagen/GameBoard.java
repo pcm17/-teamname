@@ -207,7 +207,7 @@ public class GameBoard {
 			return;
 		}
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
+        boolean[][] unhighlight = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){

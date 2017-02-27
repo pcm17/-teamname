@@ -103,4 +103,47 @@ public class GameLogic{
     public static char[][] getGameBoardArray() {
         return gameBoardArray;
     }
+	
+	/**
+	 * This function finds where a piece is allowed to move based on the rules of the game.
+	 * @param piece This parameter is the current game piece that is being looked at.
+	 * @param col This parameter is the current column that the game piece is located at.
+	 * @param row This parameter is the current row that the game piece is located at.
+	 * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
+	 * piece can move to.
+	 */
+	public static boolean[][] getValidMoves(char piece, int col, int row, char[][] gameBoard){
+		boolean[][] validSpaces = new boolean[GRID_SIZE][GRID_SIZE];
+		
+		for(int i=col+1; i<GRID_SIZE; i++){//check move right
+			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=col-1; i>=0; i--){//check move left
+			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row+1; i<GRID_SIZE; i++){//check move down
+			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row-1; i>=0; i--){//check move up
+			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
+		return validSpaces;
+	}
+	
 }
