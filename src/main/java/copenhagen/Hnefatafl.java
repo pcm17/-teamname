@@ -45,6 +45,8 @@ public class Hnefatafl {
 	private static BoardLocation selectedLoc;
 	private static JButton selected;
 	private static boolean pieceIsSelected = false;
+	private static char winner;
+	private static FinalMenu finalMenu;
 
     /**
      * This is the main method which starts the program.
@@ -119,6 +121,10 @@ public class Hnefatafl {
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
+		winner = GameLogic.checkWinner(pieceLayout);
+		if (winner != '0') {
+			finalMenu = new FinalMenu(winner);
+		}
 		return turnCount;
     }
 
@@ -430,46 +436,6 @@ public class Hnefatafl {
 		setButtonImage(pieceType,dButton);
 	}
 
-    /**
-     * This function finds where a piece is allowed to move based on the rules of the game.
-     * @param piece This parameter is the current game piece that is being looked at.
-     * @param col This parameter is the current column that the game piece is located at.
-     * @param row This parameter is the current row that the game piece is located at.
-     * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
-     * piece can move to.
-     */
-	public static boolean[][] getValidMoves(char piece, int col, int row){
-		boolean[][] validSpaces = new boolean[boardSize][boardSize];
-		for(int i=col+1; i<boardSize; i++){//check move right
-            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
-				validSpaces[i][row] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=col-1; i>=0; i--){//check move left
-            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
-				validSpaces[i][row] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=row+1; i<boardSize; i++){//check move down
-            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
-				validSpaces[col][i] = true;
-			}else{
-				break;
-			}
-		}
-		for(int i=row-1; i>=0; i--){//check move up
-            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
-				validSpaces[col][i] = true;
-			}else{
-				break;
-			}
-		}
-		return validSpaces;
-	}
 
 	/**
      * This function sets the icon of a particular button.

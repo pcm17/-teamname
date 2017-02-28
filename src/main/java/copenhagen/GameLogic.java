@@ -155,4 +155,64 @@ public class GameLogic{
 		}
 		return validSpaces;
 	}
+	
+	/**
+	 This function checks if there is a winner at the end of each turn
+	 */
+	public static char checkWinner(char[][] gameBoard) {
+		char winner = '0';
+		// Check Full Surrounding of king for Attackers Win
+		for (int i = 1; i < gameBoard.length-1; i++) {
+			for (int j = 1; j < gameBoard.length-1; j++) {
+				if(gameBoard[i][j] == 'k') { // Found the king piece
+					if (gameBoard[i+1][j] == 'b' && gameBoard[i][j+1] == 'b' && gameBoard[i-1][j] == 'b' && gameBoard[i][j-1] == 'b' ) {
+						// King is entirely surrounded
+						winner = 'b';
+					}
+				}
+			}
+		}
+		// Check Left Edge for Attackers Win
+		for (int i = 1; i < gameBoard.length-1; i++) {
+			if(gameBoard[i][0] == 'k') { // Found the king piece
+				if (gameBoard[i+1][0] == 'b' && gameBoard[i][1] == 'b' && gameBoard[i-1][0] == 'b') {
+					// King is surrounded on left edge
+					winner = 'b';
+				}
+			}
+		}
+		// Check Right Edge for Attackers Win
+		for (int i = 1; i < gameBoard.length-1; i++) {
+			if(gameBoard[i][10] == 'k') { // Found the king piece
+				if (gameBoard[i+1][10] == 'b' && gameBoard[i][9] == 'b' && gameBoard[i-1][10] == 'b') {
+					// King is surrounded on right edge
+					winner = 'b';
+				}
+			}
+		}
+		// Check Bottom Edge for Attackers Win
+		for (int i = 1; i < gameBoard.length-1; i++) {
+			if(gameBoard[10][i] == 'k') { // Found the king piece
+				if (gameBoard[10][i+1] == 'b' && gameBoard[9][i] == 'b' && gameBoard[10][i-1] == 'b') {
+					// King is surrounded on bottom edge
+					winner = 'b';
+				}
+			}
+		}
+		// Check Top Edge for Attackers Win
+		for (int i = 1; i < gameBoard.length-1; i++) {
+			if(gameBoard[0][i] == 'k') { // Found the king piece
+				if (gameBoard[0][i+1] == 'b' && gameBoard[1][i] == 'b' && gameBoard[0][i-1] == 'b') {
+					// King is surrounded on bottom edge
+					winner = 'b';
+				}
+			}
+		}
+		// Check Corners for Defenders Win
+		if (gameBoard[0][0] == 'k' || gameBoard[0][10] == 'k' || gameBoard[10][0] == 'k' || gameBoard[10][10] == 'k') {
+			// King is in one of the corners
+			winner = 'w';
+		}
+		return winner;
+	}
 }
